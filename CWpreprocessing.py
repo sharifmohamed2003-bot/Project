@@ -5,8 +5,6 @@ This module defines a class that can:
 1. Load a CSV into a pandas DataFrame
 2. Format/clean the DataFrame
 3. Store the DataFrame into a SQLite database
-
-Use this module in Jupyter Notebooks by importing the class.
 """
 import re
 import pandas as pd
@@ -15,10 +13,6 @@ from pathlib import Path
 
 
 class CSVtoSQLite:
-    """
-    A class for loading CSV files, formatting DataFrames,
-    and saving them into SQLite databases.
-    """
 
     _clean_counter = 0   # internal tracker for dfCleanTest_(num)
 
@@ -103,7 +97,7 @@ class CSVtoSQLite:
         # Normalize score columns to out of 100
         df = self.normalize_scores(df)
 
-        # Save the fully formatted & cleaned DataFrame
+        # Save the fully formatted and cleaned DataFrame
         formatted_name = f"dfFormattedCleaned_{test_num}"
         setattr(self, formatted_name, df.copy())
 
@@ -111,30 +105,30 @@ class CSVtoSQLite:
         return df
 
     def save_to_sqlite(self, db_path: str, table_name: str) -> None:
-        """Save the DataFrame into a SQLite database table."""
-        if self.df is None:
-            raise ValueError("DataFrame is not ready. Load and format the CSV first.")
-
-        db_path = Path(db_path)
+        """Save the DataFrame into a SQLite database table"""
+      
         conn = sqlite3.connect(db_path)
-        self.df.to_sql(table_name, conn, if_exists="replace", index=False)
-        conn.close()
 
+        # Iterate through all attributes of the object
+        for attr_name in dir(self):
+            if attr_name.startswith(("dftest_", "dfCleanTest_", "dfFormattedCleaned_")):
+                df = getattr(self, attr_name)
+                if isinstance(df, pd.DataFrame):
+                    # Convert object columns to text
+                    for col in df.select_dtypes(include='object').columns:
+                        df[col] = df[col].astype(str)
+                    # Save to SQLite table
+                    df.to_sql(attr_name, conn, if_exists='replace', index=False)
+                    print(f"Saved table '{attr_name}' with {len(df)} rows.")
+
+        conn.commit()
+        conn.close()
+        print(f"Database '{db_path}' created and all DataFrames saved.")
     def convert(self, db_path: str, table_name: str) -> None:
         """
-        Complete process:
-        - Load CSV
-        - Format DataFrame
-        - Save to SQLite
+        finishes the process by converting the df to sqlite
         """
         self.load_csv()
         self.clean_dataframe()
         self.save_to_sqlite(db_path, table_name)
 
-
-
-# Example Jupyter Notebook usage:
-# --------------------------------------------------
-# from csv_to_sqlite_module import CSVtoSQLite
-# converter = CSVtoSQLite("input.csv")
-# converter.convert("database.db", "my_table")
