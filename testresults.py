@@ -3,8 +3,9 @@
 
 import sqlite3
 import pandas as pd
-import matplotlib as plt
+import matplotlib.pyplot as plt
 from IPython.display import display
+
 
 def get_student_scores(db_path: str, student_id: str):
     """
@@ -59,8 +60,11 @@ def plot_student_scores(df, student_id):
     score_cols = df.select_dtypes(include='number').columns.tolist()
     
     # Exclude index-like columns if present
-    non_score_cols = ['score'] if 'score' in score_cols else []
-    score_cols = [c for c in score_cols if c not in non_score_cols]
+    if 'score' in df.columns:
+        score_cols = ['score']
+    else:
+        score_cols = df.select_dtypes(include='number').columns.tolist()
+
 
     # If no numeric columns, fallback to using 'score' column
     if not score_cols and 'score' in df.columns:

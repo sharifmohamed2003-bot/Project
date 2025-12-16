@@ -1,0 +1,617 @@
+﻿research id,Which of followings are true for you,Which of the followings have you studied or had experience with,What level programming knowledge do you have?,Do you like programming,What do you think about sci-fi movies ?,What do you think about learning to program  ?,Can you please specify the programming language you know which a
+1,I have A Level Computer Science,Python,Intermediate,Yes,Okay,I don't know whether it is hard or easy to learn.,
+2,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+C++
+Java
+HTML",Advanced,Yes,Okay,It is easy to learn.,
+3,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School",Python,Intermediate,Yes,Interesting,It is hard to learn.,
+4,"I have studied programming at Degree Foundation
+I have studied programming at Secondary School
+I have taught myself to program","Python
+HTML",Beginner,Yes,Okay,I don't know whether it is hard or easy to learn.,
+5,"I have A Level Computer Science
+I have taught myself to program","Python
+Java
+JavaScript
+HTML
+Any other",Intermediate,Yes,Inspiring,It is easy to learn.,SQL
+6,"I have GCSE Computer Science
+I have studied programming at Secondary School",Python,Beginner,Yes,Okay,It is easy to learn.,
+7,I have taught myself to program,Python,Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+8,I have A Level Computer Science,"Python
+Scratch
+Java
+JavaScript
+HTML
+Any other",Intermediate,Yes,Interesting,It is easy to learn.,Pasca
+9,I have A Level Computer Science,"JavaScript
+HTML
+Any other",Intermediate,Yes,Inspiring,It is hard to learn.,VB
+10,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have studied programming at Primary School
+I have taught myself to program","Python
+Scratch
+JavaScript
+HTML",Intermediate,Yes,Okay,It is easy to learn.,
+11,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+JavaScript
+HTML",Intermediate,Yes,Interesting,It is easy to learn.,
+12,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+C Sharp
+Any other",Intermediate,Yes,Interesting,It is hard to learn.,VB
+13,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Any other",Intermediate,Yes,Interesting,I don't know whether it is hard or easy to learn.,VB
+14,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+C Sharp",Advanced,Yes,Interesting,It is easy to learn.,
+15,I have studied programming at Degree Foundation,"Python
+C++
+Java
+JavaScript
+HTML",Intermediate,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+16,I have A Level Computer Science,"Python
+HTML",Beginner,Yes,Okay,It is hard to learn.,
+17,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have studied programming at Primary School
+I have taught myself to program","Python
+C Sharp
+HTML",Intermediate,Yes,Interesting,It is easy to learn.,
+18,"I have GCSE Computer Science
+I have A Level Computer Science
+I have taught myself to program","Python
+C++
+C Sharp
+Scratch",Intermediate,Yes,Inspiring,It is easy to learn.,
+19,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Scratch
+JavaScript
+HTML
+PHP",Beginner,Yes,Interesting,It is easy to learn.,
+20,"I have GCSE Computer Science
+I have A Level Computer Science
+I have taught myself to program",C Sharp,Intermediate,Yes,Okay,It is hard to learn.,
+21,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+C Sharp
+HTML",Intermediate,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+22,"I have studied programming at Secondary School
+I have studied programming at Primary School
+I have taught myself to program","Python
+Scratch
+JavaScript
+HTML
+PHP",Intermediate,Yes,Okay,I don't know whether it is hard or easy to learn.,
+23,"I have studied programming at Secondary School
+I have studied programming at Primary School","C Sharp
+Java",Beginner,Yes,Inspiring,It is easy to learn.,
+24,"I have A Level Computer Science
+I have taught myself to program","Python
+Scratch
+JavaScript
+HTML
+Any other",Beginner,Yes,Interesting,It is easy to learn.,Matla
+25,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+Scratch
+JavaScript
+HTML",Intermediate,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+26,I have A Level Computer Science,"HTML
+Any other",Intermediate,Yes,Okay,I don't know whether it is hard or easy to learn.,VB
+27,"I have A Level Computer Science
+I have studied programming at Secondary School","HTML
+PHP
+Any other",Beginner,Yes,Okay,I don't know whether it is hard or easy to learn.,vb
+28,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have studied programming at Primary School","Python
+HTML",Beginner,No,Interesting,I don't know whether it is hard or easy to learn.,
+29,"I have GCSE Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+Scratch
+Java
+JavaScript
+HTML",Beginner,Yes,Interesting,It is hard to learn.,
+30,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have studied programming at Primary School
+I have taught myself to program","Python
+C Sharp
+Scratch
+Java
+JavaScript
+HTML",Intermediate,Yes,Interesting,It is easy to learn.,
+31,"I have GCSE Computer Science
+I have A Level Computer Science","HTML
+PHP
+Any other",Intermediate,Yes,Interesting,It is hard to learn.,VB
+32,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+C Sharp
+Scratch
+Java
+HTML
+PHP
+Any other",Intermediate,Yes,Inspiring,It is hard to learn.,SQL
+33,I have taught myself to program,"Scratch
+Java
+JavaScript
+HTML
+PHP",Advanced,Yes,Interesting,It is easy to learn.,
+34,I have no idea about programming,none,Below beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+35,I have no idea about programming,none,Below beginner,Yes,Interesting,It is easy to learn.,
+36,I have taught myself to program,"HTML
+Any other",Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,SQL
+37,I have no idea about programming,none,Below beginner,No,Interesting,I don't know whether it is hard or easy to learn.,
+38,"I have GCSE Computer Science
+I have A Level Computer Science
+I have taught myself to program","Python
+C++
+Java",Intermediate,Yes,Okay,It is easy to learn.,
+39,I have no idea about programming,none,Below beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+40,I have no idea about programming,"Python
+C++
+C Sharp
+Java
+JavaScript
+HTML
+PHP",Intermediate,Yes,Interesting,It is easy to learn.,
+41,I have no idea about programming,none,Beginner,Yes,Okay,It is hard to learn.,
+42,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Scratch",Beginner,Yes,Interesting,It is hard to learn.,
+43,I have studied programming at Secondary School,"Python
+Scratch
+HTML",Beginner,Yes,Okay,I don't know whether it is hard or easy to learn.,
+44,"I have GCSE Computer Science
+I have A Level Computer Science
+I have taught myself to program","Python
+Java
+HTML",Beginner,Yes,Okay,I don't know whether it is hard or easy to learn.,
+45,I have taught myself to program,"Python
+Java",Intermediate,Yes,Interesting,It is easy to learn.,
+46,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+Scratch
+JavaScript
+HTML
+Any other",Advanced,Yes,Okay,It is easy to learn.,VB
+47,"I have studied programming at Degree Foundation
+I have studied programming at Secondary School","Python
+JavaScript
+HTML
+PHP
+Any other",Beginner,Yes,Okay,I don't know whether it is hard or easy to learn.,Sql
+48,"I have A Level Computer Science
+I have taught myself to program","Python
+C Sharp
+Java
+HTML
+Any other",Intermediate,Yes,Interesting,It is hard to learn.,SQL
+49,I have studied programming at Degree Foundation,"Python
+HTML",Intermediate,Yes,Boring,It is easy to learn.,
+50,I have GCSE Computer Science,"Python
+Scratch",Beginner,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+51,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Scratch
+HTML",Intermediate,Yes,Interesting,It is easy to learn.,
+52,I have A Level Computer Science,"Python
+Java",Beginner,Yes,Interesting,It is easy to learn.,
+53,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+JavaScript
+HTML
+Any other",Advanced,Yes,Interesting,It is easy to learn.,VBnet
+54,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+C++
+HTML
+PHP",Intermediate,Yes,Okay,I don't know whether it is hard or easy to learn.,
+55,I have taught myself to program,"Java
+JavaScript
+HTML
+PHP",Beginner,Yes,Okay,It is hard to learn.,
+56,"I have GCSE Computer Science
+I have studied programming at Secondary School",Python,Intermediate,Yes,Okay,I don't know whether it is hard or easy to learn.,
+57,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+Any other",Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+58,"I have studied programming at Degree Foundation
+I have taught myself to program","Python
+C++
+C Sharp
+Java
+JavaScript
+HTML
+PHP
+Any other",Advanced,Yes,Interesting,It is easy to learn.,"VB, C"
+59,"I have A Level Computer Science
+I have studied programming at Secondary School","Python
+C++",Intermediate,Yes,Interesting,It is easy to learn.,
+60,I have no idea about programming,none,Below beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+61,"I have GCSE Computer Science
+I have A Level Computer Science
+I have taught myself to program","Python
+Scratch
+HTML",Intermediate,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+62,"I have A Level Computer Science
+I have taught myself to program","Python
+C++
+C Sharp
+Java
+JavaScript
+HTML
+PHP",Intermediate,Yes,Okay,It is easy to learn.,
+63,I have no idea about programming,none,Below beginner,No,Inspiring,I don't know whether it is hard or easy to learn.,
+64,"I have GCSE Computer Science
+I have A Level Computer Science","C++
+C Sharp",Intermediate,Yes,Inspiring,It is easy to learn.,
+65,"I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Java
+JavaScript
+HTML",Intermediate,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+66,"I have GCSE Computer Science
+I have A Level Computer Science",Any other,Beginner,Yes,Okay,It is easy to learn.,VB
+67,I have taught myself to program,"Java
+JavaScript
+HTML",Beginner,Yes,Interesting,It is easy to learn.,
+68,"I have studied programming at Secondary School
+I have taught myself to program","Python
+Scratch
+Java
+JavaScript
+HTML",Intermediate,Yes,Okay,I don't know whether it is hard or easy to learn.,
+69,I have no idea about programming,none,Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+70,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+HTML
+Any other",Intermediate,Yes,Interesting,It is easy to learn.,VbNet
+71,I have no idea about programming,HTML,Beginner,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+72,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+HTML
+PHP
+Any other",Beginner,No,Interesting,It is hard to learn.,pasca
+73,I have studied programming at Degree Foundation,"Python
+C++
+C Sharp
+Java",Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+74,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+C++
+Any other",Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,VB
+75,"I have A Level Computer Science
+I have taught myself to program","Java
+JavaScript
+HTML
+Any other",Beginner,Yes,Okay,It is hard to learn.,VB
+76,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+HTML
+PHP
+Any other",Intermediate,Yes,Interesting,It is easy to learn.,VB
+77,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+HTML",Intermediate,Yes,Interesting,It is easy to learn.,
+78,I have taught myself to program,"Python
+C Sharp
+Scratch
+Java",Beginner,Yes,Interesting,It is hard to learn.,
+79,I have no idea about programming,none,Below beginner,No,Okay,I don't know whether it is hard or easy to learn.,
+80,I have no idea about programming,none,Below beginner,Yes,Interesting,It is easy to learn.,
+81,I have A Level Computer Science,"C++
+C Sharp",Intermediate,Yes,Okay,I don't know whether it is hard or easy to learn.,
+82,"I have GCSE Computer Science
+I have A Level Computer Science
+I have taught myself to program","Python
+C++
+Scratch
+JavaScript
+HTML
+Any other",Beginner,Yes,Okay,I don't know whether it is hard or easy to learn.,VB
+83,I have GCSE Computer Science,"Python
+C Sharp",Intermediate,Yes,Interesting,It is easy to learn.,
+84,I have taught myself to program,"Python
+HTML",Below beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+85,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Scratch
+JavaScript
+HTML
+Any other",Intermediate,Yes,Inspiring,I don't know whether it is hard or easy to learn.,Swift
+86,"I have A Level Computer Science
+I have taught myself to program","Scratch
+JavaScript
+HTML
+PHP",Intermediate,Yes,Inspiring,It is hard to learn.,
+87,"I have A Level Computer Science
+I have taught myself to program","Python
+JavaScript
+HTML",Intermediate,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+88,"I have A Level Computer Science
+I have studied programming at Degree Foundation","C++
+Any other",Beginner,Yes,Interesting,It is easy to learn.,VB
+89,"I have GCSE Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+Scratch
+HTML",Beginner,Yes,Okay,It is easy to learn.,
+90,I have studied programming at Secondary School,"Java
+HTML",Intermediate,Yes,Inspiring,It is hard to learn.,
+91,I have A Level Computer Science,"Python
+Scratch
+JavaScript
+HTML
+Any other",Intermediate,Yes,Inspiring,It is easy to learn.,VB
+92,"I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+Java
+HTML",Advanced,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+93,"I have A Level Computer Science
+I have taught myself to program","Python
+C Sharp
+Java",Intermediate,Yes,Interesting,It is easy to learn.,
+94,I have no idea about programming,HTML,Below beginner,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+95,I have taught myself to program,Python,Beginner,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+96,I have studied programming at Degree Foundation,"Python
+JavaScript
+HTML",Intermediate,Yes,Interesting,It is easy to learn.,
+97,"I have taught myself to program
+I have no idea about programming",HTML,Beginner,Yes,Interesting,It is hard to learn.,
+98,"I have GCSE Computer Science
+I have taught myself to program","Python
+Scratch
+HTML",Beginner,Yes,Inspiring,It is easy to learn.,
+99,I have A Level Computer Science,Python,Intermediate,Yes,Inspiring,It is easy to learn.,
+100,I have A Level Computer Science,"Python
+HTML",Intermediate,Yes,Boring,It is easy to learn.,
+101,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+Scratch
+Java
+JavaScript
+HTML
+Any other",Intermediate,Yes,Interesting,I don't know whether it is hard or easy to learn.,pasca
+102,"I have GCSE Computer Science
+I have A Level Computer Science","Java
+HTML",Beginner,No,Inspiring,It is hard to learn.,
+103,I have studied programming at Degree Foundation,"Python
+HTML",Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+104,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+C++
+C Sharp
+Scratch
+JavaScript
+HTML
+Any other",Intermediate,Yes,Okay,It is easy to learn.,F#
+105,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+C Sharp
+Java
+HTML
+Any other",Intermediate,Yes,Interesting,I don't know whether it is hard or easy to learn.,VB
+106,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Scratch
+Java
+HTML",Intermediate,Yes,Interesting,It is easy to learn.,
+107,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+HTML
+Any other",Intermediate,Yes,Okay,It is hard to learn.,vbnet
+108,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Scratch",Beginner,Yes,Boring,It is easy to learn.,
+109,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+Any other",Beginner,No,Okay,It is easy to learn.,Basic
+110,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+Scratch",Intermediate,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+111,"I have GCSE Computer Science
+I have taught myself to program","Python
+C Sharp
+JavaScript
+HTML
+Any other",Intermediate,Yes,Okay,I don't know whether it is hard or easy to learn.,C
+112,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+C Sharp",Beginner,Yes,Inspiring,It is hard to learn.,
+113,I have taught myself to program,"Python
+C++
+Java
+JavaScript
+HTML",Intermediate,Yes,Inspiring,It is hard to learn.,
+114,"I have GCSE Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","C Sharp
+Scratch
+JavaScript
+HTML",Beginner,Yes,Okay,It is easy to learn.,
+115,I have no idea about programming,none,Below beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+116,"I have GCSE Computer Science
+I have A Level Computer Science",Python,Beginner,Yes,Boring,It is hard to learn.,
+117,I have studied programming at Degree Foundation,Python,Beginner,Yes,Boring,It is easy to learn.,
+118,"I have GCSE Computer Science
+I have taught myself to program","Python
+C Sharp",Intermediate,Yes,Interesting,It is hard to learn.,
+119,I have no idea about programming,Python,Beginner,Yes,Okay,It is hard to learn.,
+120,"I have GCSE Computer Science
+I have studied programming at Secondary School","Python
+Scratch
+JavaScript
+HTML",Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+121,"I have GCSE Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+Scratch
+JavaScript",Intermediate,Yes,Boring,I don't know whether it is hard or easy to learn.,
+122,"I have GCSE Computer Science
+I have A Level Computer Science
+I have taught myself to program","Python
+Scratch
+JavaScript
+HTML
+PHP",Intermediate,Yes,Inspiring,It is easy to learn.,
+123,"I have A Level Computer Science
+I have studied programming at Secondary School","Python
+HTML
+Any other",Intermediate,Yes,Interesting,It is easy to learn.,Pasca
+124,I have taught myself to program,"Python
+C++
+JavaScript",Beginner,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+125,I have taught myself to program,"Java
+HTML",Beginner,Yes,Boring,I don't know whether it is hard or easy to learn.,
+126,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+C Sharp
+JavaScript
+HTML",Intermediate,Yes,Okay,I don't know whether it is hard or easy to learn.,
+127,I have no idea about programming,Python,Below beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+128,I have taught myself to program,"Python
+Scratch
+Java
+JavaScript
+HTML",Beginner,Yes,Interesting,It is hard to learn.,
+129,I have taught myself to program,"JavaScript
+HTML",Below beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+130,I have A Level Computer Science,Any other,Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,VBNet
+131,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Scratch
+HTML
+Any other",Intermediate,Yes,Okay,It is easy to learn.,pasca
+132,I have taught myself to program,"Scratch
+Java
+JavaScript
+HTML",Beginner,Yes,Inspiring,It is easy to learn.,
+133,I have studied programming at Secondary School,"C++
+HTML",Beginner,No,Interesting,I don't know whether it is hard or easy to learn.,
+134,I have no idea about programming,"HTML
+Any other",Below beginner,Yes,Inspiring,I don't know whether it is hard or easy to learn.,SQL
+135,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+Scratch
+JavaScript
+HTML",Beginner,Yes,Okay,It is easy to learn.,
+136,I have studied programming at Secondary School,HTML,Below beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+137,I have studied programming at Secondary School,C++,Below beginner,Yes,Inspiring,It is easy to learn.,
+138,I have studied programming at Degree Foundation,Python,Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+139,I have GCSE Computer Science,"Python
+HTML",Below beginner,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+140,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+C++
+Scratch
+JavaScript
+HTML",Intermediate,Yes,Okay,It is easy to learn.,
+141,I have taught myself to program,"Python
+Scratch",Beginner,Yes,Inspiring,I don't know whether it is hard or easy to learn.,
+142,I have GCSE Computer Science,"Python
+JavaScript
+HTML",Beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+143,"I have GCSE Computer Science
+I have studied programming at Secondary School",Python,Beginner,Yes,Interesting,It is hard to learn.,
+144,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have taught myself to program","Python
+Scratch
+Java
+HTML
+Any other",Intermediate,Yes,Interesting,It is easy to learn.,Visua
+145,"I have A Level Computer Science
+I have taught myself to program","Python
+Java
+Any other",Intermediate,Yes,Inspiring,It is easy to learn.,VBnet
+146,"I have A Level Computer Science
+I have studied programming at Secondary School",Any other,Intermediate,Yes,Inspiring,I don't know whether it is hard or easy to learn.,VB
+147,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School
+I have studied programming at Primary School","C Sharp
+Scratch
+JavaScript
+HTML
+PHP",Intermediate,Yes,Interesting,It is easy to learn.,
+148,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+JavaScript
+HTML",Beginner,Yes,Okay,It is easy to learn.,
+149,"I have GCSE Computer Science
+I have A Level Computer Science","Python
+C Sharp
+Scratch
+HTML
+Any other",Intermediate,Yes,Interesting,It is easy to learn.,SQL
+150,I have taught myself to program,"Python
+Java
+JavaScript
+HTML",Beginner,Yes,Interesting,It is easy to learn.,
+151,I have no idea about programming,none,Below beginner,Yes,Inspiring,It is easy to learn.,
+152,I have GCSE Computer Science,"none
+JavaScript",Beginner,Yes,Interesting,It is easy to learn.,
+153,I have GCSE Computer Science,Python,Below beginner,Yes,Interesting,I don't know whether it is hard or easy to learn.,
+154,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+Scratch
+HTML
+Any other",Advanced,Yes,Inspiring,It is easy to learn.,VB
+155,"I have GCSE Computer Science
+I have A Level Computer Science
+I have studied programming at Secondary School","Python
+JavaScript",Beginner,Yes,Interesting,It is easy to learn.,
+156,I have taught myself to program,"Python
+JavaScript",Below beginner,Yes,Interesting,It is hard to learn.,
