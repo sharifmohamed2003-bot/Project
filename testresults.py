@@ -1,5 +1,8 @@
 # Ensure plots display inline
-%matplotlib inline
+try:
+    get_ipython().run_line_magic('matplotlib', 'inline')
+except NameError:
+    pass
 
 import sqlite3
 import pandas as pd
