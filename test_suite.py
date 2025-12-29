@@ -82,7 +82,7 @@ class TestCSVtoSQLite(unittest.TestCase):
         cursor.execute("SELECT name FROM sqlite_master WHERE type='table';")
         tables = [t[0] for t in cursor.fetchall()]
         self.assertIn("dftest_1", tables)
-        self.assertIn("dfCleanTest_1_new", tables)
+        self.assertIn("dfCleanTest_1", tables)
         self.assertIn("dfFormattedCleaned_1", tables)
 
         # Check row counts
