@@ -73,11 +73,10 @@ class CSVtoSQLite:
 
         # rename columns
         df.columns = [
-            re.sub(r"Grades(\d+).*", r"Grades\1",
-            re.sub(r"Q(\d+).*", r"Q\1",
-            re.sub(r"[ /?\-]", "", col.strip())))
+            re.sub(r"[ /?\-]", "", col.strip())
             for col in df.columns
         ]
+
 
         # replace nulls with 0
         df = df.fillna(0)
