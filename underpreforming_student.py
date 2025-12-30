@@ -33,11 +33,33 @@ class UnderperformingStudents:
 
     #  detection helpers 
     @staticmethod
-    def detect_student_id_col(df: pd.DataFrame) -> str:
-        candidates = [c for c in df.columns if "student" in c.lower()]
-        if not candidates:
-            raise ValueError("Could not find a student id column (no column containing 'student').")
-        return candidates[0]
+    def detect_student_id_col(self, df):
+        """
+        Detect identifier column (student / researcher / candidate).
+        """
+        cols = list(df.columns)
+        norm = [c.lower().replace(" ", "").replace("_", "").replace("-", "") for c in cols]
+
+        # The ID used in the CSV is researcher id, however to future proof this ive added other possibilities
+        id_keywords = [
+            "studentid", "student",
+            "researcherid", "researcher",
+            "candidateid", "candidate",
+            "learnerid", "learner",
+            "userid", "user",
+            "id"
+        ]
+
+        for key in id_keywords:
+            for original, normalized in zip(cols, norm):
+                if key in normalized:
+                    return original
+
+        raise ValueError(
+            "Could not find a student/researcher ID column. "
+            "Expected a column like 'Student ID', 'Researcher ID', or similar."
+        )
+
 
     @staticmethod
     def ensure_numeric_0_100(series: pd.Series) -> pd.Series:

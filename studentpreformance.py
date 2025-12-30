@@ -66,7 +66,7 @@ class StudentPerformance:
             return preferred[0]
         return tables[0] if tables else None
 
-    # ---------- main API ----------
+    # main API 
     def analyse(self, student_id: str, table: str | None = None) -> pd.DataFrame:
         tables = self.list_tables()
         if not tables:
