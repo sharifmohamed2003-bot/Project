@@ -30,11 +30,38 @@ class StudentPerformance:
 
     # ---------- detection helpers ----------
     @staticmethod
-    def detect_student_id_col(df: pd.DataFrame) -> str:
-        candidates = [c for c in df.columns if "student" in c.lower()]
-        if not candidates:
-            raise ValueError("Could not find a student id column (no column containing 'student').")
-        return candidates[0]
+    def detect_student_id_col(self, df):
+
+        """
+        Detect the identifier column (student/researcher/candidate).
+        Your DB uses: researchid
+        """
+
+
+        def norm(s: str) -> str:
+            return str(s).lower().replace(" ", "").replace("_", "").replace("-", "")
+
+        cols = list(df.columns)
+        norm_cols = [norm(c) for c in cols]
+
+        # Prefer most specific matches first
+        keys = [
+            "researchid", "researcherid", "researcher",
+            "studentid", "student",
+            "candidateid", "candidate",
+            "learnerid", "userid", "user",
+            "id"
+        ]
+
+        for k in keys:
+            for original, n in zip(cols, norm_cols):
+                if k in n:
+                    return original
+
+        raise ValueError(
+            "Could not find an ID column. Expected something like 'researchid' / 'Researcher ID' / 'Student ID'."
+    )
+
 
     @staticmethod
     def question_columns(df: pd.DataFrame) -> list[str]:

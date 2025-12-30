@@ -156,10 +156,13 @@ class CSVtoSQLite:
         df = self.df.copy()
 
         #rename columns using the standardiser (handles Q1, score, state, timetaken)
-        df = self._standardize_columns(df)
+        df = self.standardize_columns(df)
 
         # replace nulls with 0
         df = df.fillna(0)
+
+        # drop rows that are completely empty
+        df = df.dropna(how="all")
 
         # drop redundant columns
         for col in ["state", "timetaken"]:

@@ -18,21 +18,27 @@ class TestResultsAnalyzer:
     @staticmethod
     def get_student_scores(db_path: str, student_id: str) -> pd.DataFrame | None:
         """
-        Retrieve all test scores of a given student from all tables
-        in the database.
+        Retrieve all test scores/rows of a given researcher/student from all tables.
 
-        *Args:
+        Args:
             db_path (str): Path to the SQLite database
-            student_id (str): Student ID to search for
+            student_id (str): ID to search for (e.g., "156" or "156.0")
 
         Returns:
-            pd.DataFrame or None: Combined DataFrame of results
+            pd.DataFrame | None: Combined DataFrame of results
         """
+        # Normalize the user input to an integer when possible (handles "156" and "156.0")
+        sid_raw = str(student_id).strip()
+        sid_int = None
+        try:
+            sid_int = int(float(sid_raw))
+        except ValueError:
+            pass  # keep as text fallback
+
         conn = sqlite3.connect(db_path)
 
-        # Get all table names
         tables = pd.read_sql(
-            "SELECT name FROM sqlite_master WHERE type='table'",
+            "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name;",
             conn
         )["name"].tolist()
 
@@ -40,21 +46,25 @@ class TestResultsAnalyzer:
 
         for table in tables:
             try:
-                df = pd.read_sql(f"SELECT * FROM '{table}'", conn)
+                # Read only column names first (faster & safer)
+                cols = pd.read_sql(f"PRAGMA table_info([{table}]);", conn)["name"].tolist()
 
-                # Detect student ID column dynamically
-                id_cols = [c for c in df.columns if "student" in c.lower()]
+                # Detect the ID column (your case: 'researchid')
+                id_cols = [c for c in cols if any(k in c.lower() for k in ["researchid","researcherid","studentid","student","id"])]
                 if not id_cols:
                     continue
-
                 id_col = id_cols[0]
 
-                # Filter rows for the given student
-                df_student = df[df[id_col].astype(str) == str(student_id)]
+                # Query only matching rows directly in SQL (more reliable than pandas string compare)
+                if sid_int is not None:
+                    q = f"SELECT *, '{table}' AS source_table FROM [{table}] WHERE CAST([{id_col}] AS INTEGER) = ?"
+                    df_student = pd.read_sql_query(q, conn, params=(sid_int,))
+                else:
+                    # Fallback for non-numeric IDs
+                    q = f"SELECT *, '{table}' AS source_table FROM [{table}] WHERE TRIM(CAST([{id_col}] AS TEXT)) = ?"
+                    df_student = pd.read_sql_query(q, conn, params=(sid_raw,))
 
                 if not df_student.empty:
-                    df_student = df_student.copy()
-                    df_student["source_table"] = table
                     student_data.append(df_student)
 
             except Exception:
@@ -63,33 +73,61 @@ class TestResultsAnalyzer:
         conn.close()
 
         if not student_data:
-            print(f"No data found for student ID: {student_id}")
+            print(f"No data found for researcher ID: {student_id}")
             return None
 
         return pd.concat(student_data, ignore_index=True)
 
     @staticmethod
+    
     def plot_student_scores(df: pd.DataFrame, student_id: str) -> None:
         """
-        Plot the student's assessment scores as a bar chart.
-
-        Args:
-            df (pd.DataFrame): DataFrame of student scores
-            student_id (str): Student ID
+        Plot a bar chart of student scores per assessment/table.
+        Expects df to include 'source_table' and at least one grade/score column.
         """
+
+        if df is None or df.empty:
+            print("No data to plot.")
+            return
+
+        df = df.copy()
+
+        # 1) Pick a "score" column robustly
+        # Prefer an existing 'score' if you already created one
         if "score" not in df.columns:
-            raise ValueError("No total 'score' column found for plotting")
+            # Try common grade column patterns in your data
+            score_candidates = [c for c in df.columns if c.lower().startswith("grade") or c.lower() == "grades"]
+            if not score_candidates:
+                raise ValueError("No score/grade column found to plot (expected columns like 'Grade...' or 'Grades').")
+            score_col = score_candidates[0]
+            df["score"] = df[score_col]
+        else:
+            score_col = "score"
 
-        plot_df = df[["source_table", "score"]].copy()
+        # Convert to numeric
+        df["score"] = pd.to_numeric(df["score"], errors="coerce")
 
-        # Clean table names for display
-        plot_df["Assessment"] = plot_df["source_table"].str.split("_df").str[0]
+        # Build plot dataframe: one score per assessment/table
+        if "source_table" in df.columns:
+            plot_df = (
+                df.dropna(subset=["score"])
+                .groupby("source_table", as_index=False)["score"]
+                .max()  # keep highest score per table (matches your coursework rule)
+                .rename(columns={"source_table": "Assessment"})
+            )
+        else:
+            plot_df = df.dropna(subset=["score"]).copy()
+            plot_df["Assessment"] = "Assessment"
 
-        plt.figure(figsize=(10, 6))
-        plt.bar(plot_df["Assessment"], plot_df["score"])
-        plt.title(f"All Assessments for Student ID: {student_id}")
-        plt.xlabel("Assessment")
-        plt.ylabel("Score (Normalised to 100)")
+        if plot_df.empty:
+            print("No numeric scores available to plot.")
+            return
+
+        # 4) Plot
+        plt.figure(figsize=(10, 4))
+        plt.bar(plot_df["Assessment"].astype(str), plot_df["score"].astype(float))
         plt.xticks(rotation=45, ha="right")
+        plt.ylabel("Score")
+        plt.title(f"Scores for Researcher ID: {student_id}")
         plt.tight_layout()
         plt.show()
