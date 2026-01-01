@@ -7,12 +7,12 @@ import matplotlib.pyplot as plt
 
 class UnderperformingStudents:
     """
-    Identify underperforming students across ALL tests, sorted by summative grade.
-
-    Requirements:
-    - Students sorted by summative online test grade (ascending)
-    - Highlight lowest grade among formative tests for each student
-    - Matplotlib visualisation
+   The underperforming students analyser can:
+    - sort students by summative test score
+    - highlight the lowest grade among formative tests for each student
+    - use matplotlib for graph and table visualisation
+    This was done by Mohamed Amin Asharif (F515137)
+   started: 23/12/2025
     """
 
     def __init__(self, db_path: str):
@@ -31,8 +31,10 @@ class UnderperformingStudents:
         with sqlite3.connect(self.db_path) as conn:
             return pd.read_sql(f"SELECT * FROM '{table}'", conn)
 
-    #  detection helpers 
-
+    #  detection helpers
+    """
+    this is the detector for the student id column as the studentpreformance file but adapted for underperforming students
+    """
     def detect_student_id_col(self, df):
         """
         Detect identifier column (student / researcher / candidate).
@@ -56,8 +58,8 @@ class UnderperformingStudents:
                     return original
 
         raise ValueError(
-            "Could not find a student/researcher ID column. "
-            "Expected a column like 'Student ID', 'Researcher ID', or similar."
+            "Could not find a student/researcher ID column"
+            "Expected a column like 'Student ID', 'Researcher ID', or similar"
         )
 
 

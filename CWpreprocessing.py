@@ -5,6 +5,10 @@ This module defines a class that can:
 1. Load a CSV into a pandas DataFrame
 2. Format/clean the DataFrame
 3. Store the DataFrame into a SQLite database
+
+This was done by Mohamed Amin Asharif (F515137)
+started: 27/11/2025
+#################################################
 """
 
 import pandas as pd

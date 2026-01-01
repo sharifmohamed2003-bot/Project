@@ -8,22 +8,17 @@ plt.show()
 
 class TestResultsAnalyzer:
     """
-    Analyse student test results stored in a SQLite database
-    and visualise them using Matplotlib.
+    The Test Results Analyzer class can:
+   - retrieve all test results for a given ID across multiple tables in the database
+   - plot the results using matplotlib
+
+   This was done by Mohamed Amin Asharif (F515137)
+   started: 6/12/2025
     """
 
-    @staticmethod
+    @staticmethod## having learned what a static method does, its come in very usefule in many places along all python scripts
     def get_student_scores(db_path: str, student_id: str) -> pd.DataFrame | None:
-        """
-        Retrieve all test scores/rows of a given researcher/student from all tables.
-
-        Args:
-            db_path (str): Path to the SQLite database
-            student_id (str): ID to search for (e.g., "156" or "156.0")
-
-        Returns:
-            pd.DataFrame | None: Combined DataFrame of results
-        """
+        
         # Normalize the user input to an integer when possible
         sid_raw = str(student_id).strip()
         sid_int = None
@@ -79,8 +74,8 @@ class TestResultsAnalyzer:
     
     def plot_student_scores(df: pd.DataFrame, student_id: str) -> None:
         """
-        Plot a bar chart of student scores per assessment/table.
-        Expects df to include 'source_table' and at least one grade/score column.
+        Plot a bar chart of student scores per table.
+        Expects df to include 'source_table' and at least one score column.
         """
 
         if df is None or df.empty:

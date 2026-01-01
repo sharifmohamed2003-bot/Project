@@ -6,10 +6,13 @@ import matplotlib.pyplot as plt
 
 class StudentPerformance:
     """
-    Analyse a student's performance per question for a chosen test table.
+    the student performance analyser can:
 
-    - Absolute performance: student's % per question (0-100)
-    - Relative performance: student % - class average % (per question)
+    - identify absolute performance using student's % per question (0-100) 
+    - identify relative performance using student % and class average % (per question)
+    
+    This was done by Mohamed Amin Asharif (F515137)
+    started: 15/12/2025
     """
 
     def __init__(self, db_path: str):
@@ -32,8 +35,7 @@ class StudentPerformance:
     def detect_student_id_col(self, df):
 
         """
-        Detect the identifier column.
-        Your DB uses: researchid
+        Detect identifier column (student / researcher / candidate/ ect)
         """
 
 
@@ -63,7 +65,9 @@ class StudentPerformance:
 
 
     @staticmethod
+    
     def question_columns(df: pd.DataFrame) -> list[str]:
+        """  Identify question columns (Q1, Q2, etc.) in a DataFrame"""
         qcols = [c for c in df.columns if re.fullmatch(r"Q\d+", str(c))]
         qcols.sort(key=lambda x: int(re.findall(r"\d+", x)[0]))
         if not qcols:
@@ -113,7 +117,7 @@ class StudentPerformance:
 
         qcols = self.question_columns(df)
 
-        # Convert question cols to comparable 0-100 numeric
+        # Convert question columns to comparable 0-100 numeric
         for c in qcols:
             df[c] = self.ensure_numeric_0_100(df[c])
             df_student[c] = self.ensure_numeric_0_100(df_student[c])
