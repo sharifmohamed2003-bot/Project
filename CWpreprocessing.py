@@ -14,38 +14,7 @@ from pathlib import Path
 
 
 class CSVtoSQLite:
-    """
-    A utility class for converting and processing CSV files into SQLite database tables.
-    This class handles the complete pipeline of loading CSV data, standardizing column names,
-    normalizing scores, and saving processed dataframes to a SQLite database. It supports
-    handling multiple test formats with question columns (Q1, Q2, etc.), grade columns,
-    and student identifiers.
-    Attributes:
-        clean_counter (int): Class-level counter tracking the number of cleaned dataframes.
-        csv_path (Path): Path object pointing to the input CSV file.
-        df (pd.DataFrame): Currently loaded or processed dataframe.
-        current_prefix (str): Stem of the CSV filename, used as prefix for SQLite table names.
-        max_map (dict): Dictionary mapping column names to their maximum possible values
-                        extracted from column headers (e.g., denominators in "Q1/100").
-    Methods:
-        load_csv() -> pd.DataFrame:
-            Loads CSV file from the specified path and initializes current_prefix.
-        _standardize_columns(df: pd.DataFrame) -> pd.DataFrame:
-            Standardizes column names by removing special characters and extracting
-            denominators from headers. Handles Q columns, grade columns, and state/time columns.
-        normalize_scores(df: pd.DataFrame) -> pd.DataFrame:
-            Normalizes all score columns to a 0-100 scale using the maximum values
-            from headers or observed data.
-        clean_dataframe() -> pd.DataFrame:
-            Performs complete data cleaning pipeline: standardizes columns, handles nulls,
-            removes redundant columns, deduplicates by student_id (keeping highest score),
-            and normalizes scores. Stores intermediate versions as class attributes.
-        save_to_sqlite() -> None:
-            Persists all processed dataframes (raw, cleaned, and formatted versions)
-            to a SQLite database with table names prefixed by the CSV filename.
-        convert() -> None:
-            Executes the complete conversion workflow: load_csv() → clean_dataframe() → save_to_sqlite().
-    """
+  
 
     clean_counter = 0
 
@@ -66,7 +35,7 @@ class CSVtoSQLite:
         return self.df
 
 
-    # standardise column names + capture denominators from headers
+    # standardise column names + capture denoms from headers
     def standardize_columns(self, df: pd.DataFrame) -> pd.DataFrame:
         self.max_map = {}
         new_cols = []
@@ -97,7 +66,7 @@ class CSVtoSQLite:
                         name = "score"
                         denom = int(m.group(1))
                     else:
-                        # fallback: your original cleaning
+                        # if everything else fails
                         name = re.sub(r"[ /?\-]", "", raw.strip())
 
             # avoid collisions
@@ -128,7 +97,7 @@ class CSVtoSQLite:
         for col in score_cols:
             df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
 
-            # use true max from header if available; otherwise fallback to observed max
+            # uses true max from header if available
             max_possible = self.max_map.get(col, None)
             if max_possible is None:
                 max_possible = df[col].max()
@@ -158,19 +127,26 @@ class CSVtoSQLite:
         #rename columns using the standardiser (handles Q1, score, state, timetaken)
         df = self.standardize_columns(df)
 
-        # replace nulls with 0
-        df = df.fillna(0)
+        # treat common “missing” placeholders as NA
+        df = df.replace(
+            to_replace=[r"^\s*$", "-", "–", "—", "N/A", "NA", "na"],
+            value=pd.NA,
+            regex=True
+        )
 
-        # drop rows that are completely empty
+        #  dropy empty rows
         df = df.dropna(how="all")
+
+        # fill remaining missing values with 0
+        df = df.fillna(0)
 
         # drop redundant columns
         for col in ["state", "timetaken"]:
             if col in df.columns:
                 df = df.drop(columns=col)
 
-        # keep highest score per student (uses existing "student_id" if present)
-        if "student_id" in df.columns:
+        # keep highest score per student
+        if "research_id" in df.columns:
             score_cols = [
                 c for c in df.columns
                 if c.startswith("Q") or c.startswith("Grades") or c == "score"
@@ -180,7 +156,7 @@ class CSVtoSQLite:
                 df["total_score"] = df[score_cols].sum(axis=1)
                 df = (
                     df.sort_values("total_score", ascending=False)
-                      .drop_duplicates("student_id")
+                      .drop_duplicates("research_id")
                       .drop(columns="total_score")
                 )
 

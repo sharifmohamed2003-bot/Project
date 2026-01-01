@@ -32,7 +32,7 @@ class UnderperformingStudents:
             return pd.read_sql(f"SELECT * FROM '{table}'", conn)
 
     #  detection helpers 
-    @staticmethod
+
     def detect_student_id_col(self, df):
         """
         Detect identifier column (student / researcher / candidate).

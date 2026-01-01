@@ -1,12 +1,9 @@
-# Ensure plots display inline 
-try:
-    get_ipython().run_line_magic('matplotlib', 'inline')
-except NameError:
-    pass
+
 
 import sqlite3
 import pandas as pd
 import matplotlib.pyplot as plt
+plt.show()
 
 
 class TestResultsAnalyzer:
@@ -27,7 +24,7 @@ class TestResultsAnalyzer:
         Returns:
             pd.DataFrame | None: Combined DataFrame of results
         """
-        # Normalize the user input to an integer when possible (handles "156" and "156.0")
+        # Normalize the user input to an integer when possible
         sid_raw = str(student_id).strip()
         sid_int = None
         try:
@@ -46,16 +43,16 @@ class TestResultsAnalyzer:
 
         for table in tables:
             try:
-                # Read only column names first (faster & safer)
+                # Read column names first
                 cols = pd.read_sql(f"PRAGMA table_info([{table}]);", conn)["name"].tolist()
 
-                # Detect the ID column (your case: 'researchid')
-                id_cols = [c for c in cols if any(k in c.lower() for k in ["researchid","researcherid","studentid","student","id"])]
+                # Detect the ID column
+                id_cols = [c for c in cols if any(k in c.lower() for k in ["researchid","researcherid","studentid","student","candidateid","candidate","userid","user","id"])]
                 if not id_cols:
                     continue
                 id_col = id_cols[0]
 
-                # Query only matching rows directly in SQL (more reliable than pandas string compare)
+                # Query only matching rows directly in SQL
                 if sid_int is not None:
                     q = f"SELECT *, '{table}' AS source_table FROM [{table}] WHERE CAST([{id_col}] AS INTEGER) = ?"
                     df_student = pd.read_sql_query(q, conn, params=(sid_int,))
@@ -107,12 +104,12 @@ class TestResultsAnalyzer:
         # Convert to numeric
         df["score"] = pd.to_numeric(df["score"], errors="coerce")
 
-        # Build plot dataframe: one score per assessment/table
+        # one score per table
         if "source_table" in df.columns:
             plot_df = (
                 df.dropna(subset=["score"])
                 .groupby("source_table", as_index=False)["score"]
-                .max()  # keep highest score per table (matches your coursework rule)
+                .max()  # keep highest score per table
                 .rename(columns={"source_table": "Assessment"})
             )
         else:

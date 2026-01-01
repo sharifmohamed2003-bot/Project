@@ -15,7 +15,7 @@ class StudentPerformance:
     def __init__(self, db_path: str):
         self.db_path = db_path
 
-    # ---------- DB helpers ----------
+    # DB helpers
     def list_tables(self) -> list[str]:
         with sqlite3.connect(self.db_path) as conn:
             tables = pd.read_sql(
@@ -28,12 +28,11 @@ class StudentPerformance:
         with sqlite3.connect(self.db_path) as conn:
             return pd.read_sql(f"SELECT * FROM '{table}'", conn)
 
-    # ---------- detection helpers ----------
-    @staticmethod
+    # detection helpers
     def detect_student_id_col(self, df):
 
         """
-        Detect the identifier column (student/researcher/candidate).
+        Detect the identifier column.
         Your DB uses: researchid
         """
 
@@ -44,7 +43,7 @@ class StudentPerformance:
         cols = list(df.columns)
         norm_cols = [norm(c) for c in cols]
 
-        # Prefer most specific matches first
+       # The ID used in the CSV is researcher id, however to future proof this ive added other possibilities
         keys = [
             "researchid", "researcherid", "researcher",
             "studentid", "student",
@@ -59,7 +58,7 @@ class StudentPerformance:
                     return original
 
         raise ValueError(
-            "Could not find an ID column. Expected something like 'researchid' / 'Researcher ID' / 'Student ID'."
+            "Could not find an ID column."
     )
 
 
@@ -79,7 +78,7 @@ class StudentPerformance:
         if s.max() <= 1.0:
             s = s * 100
 
-        # If values exceed 100, normalise down to 100 (safe fallback)
+        # If values exceed 100, normalise down to 100
         if s.max() > 100:
             mx = s.max()
             s = (s / mx) * 100 if mx > 0 else 0
