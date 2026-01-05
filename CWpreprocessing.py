@@ -97,22 +97,21 @@ class CSVtoSQLite:
             or re.match(r"^Grades\d+$", col)
             or col == "score"
         ]
-
+        ## using the header max to normalise scores to 100 if it doesnt work we use the question max
         for col in score_cols:
             df[col] = pd.to_numeric(df[col], errors="coerce").fillna(0)
 
-            # uses true max from header if available
-            max_possible = self.max_map.get(col, None)
-            if max_possible is None:
-                max_possible = df[col].max()
+            header_max = self.max_map.get(col)
 
-            if max_possible > 0:
-                df[col] = (df[col] / max_possible) * 100
+            if header_max and header_max > 0:
+                df[col] = (df[col] / header_max) * 100
             else:
-                df[col] = 0
-
+                max = df[col].max()
+                if max > 0:
+                    df[col] = (df[col] / max) * 100
+                elif max > 100:
+                    df[col] = (df[col] / max) * 100
         return df
-
 
     # clean DF's
     def clean_dataframe(self) -> pd.DataFrame:
@@ -131,12 +130,7 @@ class CSVtoSQLite:
         #rename columns using the standardiser (handles Q1, score, state, timetaken)
         df = self.standardize_columns(df)
 
-        # treat common “missing” placeholders as NA
-        df = df.replace(
-            to_replace=[r"^\s*$", "-", "–", "—", "N/A", "NA", "na"],
-            value=pd.NA,
-            regex=True
-        )
+        
 
         #  dropy empty rows
         df = df.dropna(how="all")
@@ -184,12 +178,16 @@ class CSVtoSQLite:
 
         prefixes = ("dftest_", "dfCleanTest_", "dfFormattedCleanTest_")
 
-        for attr in dir(self):
-            if attr.startswith(prefixes):
-                df = getattr(self, attr)
+        for attributes in dir(self):
+
+            if attributes.startswith(prefixes):
+
+                df = getattr(self, attributes)
+
                 if isinstance(df, pd.DataFrame):
+
                     df.to_sql(
-                        f"{self.current_prefix}_{attr}",
+                        f"{self.current_prefix}_{attributes}",
                         conn,
                         if_exists="replace",
                         index=False

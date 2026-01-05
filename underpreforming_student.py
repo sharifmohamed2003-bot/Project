@@ -18,176 +18,136 @@ class UnderperformingStudents:
     def __init__(self, db_path: str):
         self.db_path = db_path
 
-    # DB helpers 
+    ############# DB helpers ###################
     def list_tables(self) -> list[str]:
+        """"List all tables in the SQLite database"""
         with sqlite3.connect(self.db_path) as conn:
-            tables = pd.read_sql(
-                "SELECT name FROM sqlite_master WHERE type='table' ORDER BY name",
-                conn
-            )["name"].tolist()
-        return tables
+            tables = pd.read_sql("SELECT name FROM sqlite_master WHERE type='table'", conn)
+
+        return tables["name"].tolist()
 
     def load_table(self, table: str) -> pd.DataFrame:
+        """Load the DB table into pandas"""
         with sqlite3.connect(self.db_path) as conn:
-            return pd.read_sql(f"SELECT * FROM '{table}'", conn)
 
-    #  detection helpers
+            return pd.read_sql(f"SELECT * FROM '{table}'", conn) #loads the specified table from the database into a pandas DataFrame
+
+    ##################### detection helpers ##################
     """
     this is the detector for the student id column as the studentpreformance file but adapted for underperforming students
     """
-    def detect_student_id_col(self, df):
+    def detect_id_col(self, df):
         """
         Detect identifier column (student / researcher / candidate).
         """
         cols = list(df.columns)
-        norm = [c.lower().replace(" ", "").replace("_", "").replace("-", "") for c in cols]
+        
 
         # The ID used in the CSV is researcher id, however to future proof this ive added other possibilities
-        id_keywords = [
-            "studentid", "student",
-            "researcherid", "researcher",
-            "candidateid", "candidate",
-            "learnerid", "learner",
-            "userid", "user",
-            "id"
-        ]
+        id_keywords = ["studentid", "student","researcherid", "researcher","candidateid", "candidate","id"]
 
-        for key in id_keywords:
-            for original, normalized in zip(cols, norm):
+        for key in id_keywords: ## insertion ish sort for checking the columns against the keywords
+            for original, normalized in zip(cols):
                 if key in normalized:
                     return original
 
-        raise ValueError(
-            "Could not find a student/researcher ID column"
-            "Expected a column like 'Student ID', 'Researcher ID', or similar"
-        )
+        raise ValueError("No ID found")
 
-
-    @staticmethod
-    def ensure_numeric_0_100(series: pd.Series) -> pd.Series:
-        s = pd.to_numeric(series, errors="coerce").fillna(0)
-        if s.max() <= 1.0:
-            s = s * 100
-        if s.max() > 100:
-            mx = s.max()
-            s = (s / mx) * 100 if mx > 0 else 0
-        return s
 
     @staticmethod
     def formatted_test_tables(tables: list[str]) -> list[str]:
-        return [t for t in tables if "_dfFormattedCleanTest_" in t]
+
+        return [t for t in tables if "_dfFormattedCleanTest_" in t]## will filter out the other saved df's to only show the formatted + cleaned versions
 
     def detect_summative_table(self, tables: list[str]) -> str | None:
-        lowered = [(t, t.lower()) for t in tables]
-        for key in ["summative", "final", "online", "exam"]:
-            matches = [t for t, tl in lowered if key in tl]
-            if matches:
-                return matches[0]
 
-        #choose formatted table with highest trailing number
-        candidates = self.formatted_test_tables(tables)
+        #choose formatted table with highest number
+        candidates = self.formatted_test_tables(tables)## gets all the formatted test tables
         if not candidates:
-            return tables[0] if tables else None
+            return tables[0] if tables else None## if no formatted tables exist return the first table and if none exist return nothing
 
-        def trailing_num(name: str) -> int:
-            m = re.search(r"_dfFormattedCleanTest_(\d+)$", name)
+        def end_num(name: str) -> int:
+
+            m = re.search(r"_dfFormattedCleanTest_(\d+)$", name) ## uses the number at the end of the name and uses the most recent or biggest
             return int(m.group(1)) if m else -1
 
-        candidates.sort(key=trailing_num, reverse=True)
-        return candidates[0]
+        candidates.sort(key=end_num, reverse=True)
+        return candidates[0]##picks the most recent formatted table
 
     def get_total_score(self, df: pd.DataFrame) -> pd.Series:
-        cols_lower = {c.lower(): c for c in df.columns}
-        if "score" in cols_lower:
-            return self.ensure_numeric_0_100(df[cols_lower["score"]])
 
-        qcols = [c for c in df.columns if re.fullmatch(r"Q\d+", str(c))]
+        if "score" in df.columns: #uses the score column if it exists
+            return df["score"]
+
+        qcols = [c for c in df.columns if re.fullmatch(r"Q\d+", str(c))]# sometimes it can be a bit buggy so this is a backup to check for Q columns
         if qcols:
-            tmp = df[qcols].copy()
-            for c in qcols:
-                tmp[c] = self.ensure_numeric_0_100(tmp[c])
-            return self.ensure_numeric_0_100(tmp.sum(axis=1))
+           return df[qcols].sum(axis=1)#sums the tuple up
 
-        #sum numeric columns excluding student id columns
-        sid_guess = [c for c in df.columns if "student" in c.lower()]
-        numeric = df.drop(columns=sid_guess, errors="ignore").select_dtypes(include="number")
-        if numeric.shape[1] == 0:
-            return pd.Series([0] * len(df), index=df.index)
-        return self.ensure_numeric_0_100(numeric.sum(axis=1))
-
-    # main API
-    def build_report(
-        self,
-        summative_table: str | None = None,
-        threshold: float = 40.0
-    ) -> tuple[pd.DataFrame, str]:
-        tables = self.list_tables()
-        tests = self.formatted_test_tables(tables) or tables
-        if not tests:
-            raise FileNotFoundError("No tables found in the database.")
-
+    ######################### main API #################################### 
+    def build_report(self,summative_table: str | None = None,threshold: int = 40.0) -> tuple[pd.DataFrame, str]:
+        
+        tables = self.list_tables()#gets all the tables 
+        tests = self.formatted_test_tables(tables)#gets the formatted ones only
+        
         if summative_table is None:
-            summative_table = self.detect_summative_table(tests)
-
-        if summative_table not in tables:
-            raise ValueError(f"Summative table '{summative_table}' not found.")
+            summative_table = self.detect_summative_table(tests)###auto detect feture if no summative table is given
 
         # Summative best per student
         df_sum = self.load_table(summative_table)
-        sid_col = self.detect_student_id_col(df_sum)
+        id_col = self.detect_id_col(df_sum)
 
-        df_sum["_total"] = self.get_total_score(df_sum)
-        df_sum_best = (
-            df_sum.sort_values("_total", ascending=False)
-                  .drop_duplicates(subset=[sid_col])
-                  .copy()
-        )
-        df_sum_best["_total"] = self.ensure_numeric_0_100(df_sum_best["_total"])
+        df_sum["total"] = self.get_total_score(df_sum)
 
+        df_sum_best = (df_sum.sort_values("total", ascending=False), df_sum.drop_duplicates(subset=[id_col]), df_sum.copy())
         #compute each student's lowest formative score
-        formative_tables = [t for t in tests if t != summative_table]
-        formative_min: dict[str, tuple[float, str]] = {}
+        formative_tables = [t for t in tests if t != summative_table] ##removes the summative table from the formative tables list
+        formative_min: dict[str, tuple[int, str]] = {}## this stores the score as a str and the score as a int and the table name as a str
 
         for t in formative_tables:
-            df_f = self.load_table(t)
-            sid_f = self.detect_student_id_col(df_f)
-            df_f["_total"] = self.ensure_numeric_0_100(self.get_total_score(df_f))
+            df_for = self.load_table(t)#load table in df
+            id_for = self.detect_id_col(df_for)#detect id column
 
-            df_f_best = (
-                df_f.sort_values("_total", ascending=False)
-                    .drop_duplicates(subset=[sid_f])
-            )
+            df_for["total"] = self.get_total_score(df_for)#get total score for each student using the function
 
-            for _, row in df_f_best.iterrows():
-                sid = str(row[sid_f])
-                sc = float(row["_total"])
-                if sid not in formative_min or sc < formative_min[sid][0]:
-                    formative_min[sid] = (sc, t)
 
-        # Combine into report
-        rows = []
-        for _, r in df_sum_best.iterrows():
-            sid = str(r[sid_col])
-            sum_score = float(r["_total"])
-            fmin_score, fmin_table = formative_min.get(sid, (float("nan"), "N/A"))
+            df_for_best = (df_for.sort_values("total", ascending=False),df_for.drop_duplicates(subset=[id_for]))#keep highest score per student
 
-            rows.append({
-                "student_id": sid,
-                "summative_table": summative_table,
-                "summative_score": sum_score,
-                "lowest_formative_score": fmin_score,
-                "lowest_formative_table": fmin_table,
-                "is_underperforming": sum_score < threshold
-            })
+            for _, row in df_for_best.iterrows():
+                id = str(row[id_for])# convert id to string
+                stud_score = int(row["total"])# get student score as int
 
+                if id not in formative_min or stud_score < formative_min[id][0]:#if id isnt in the dict store it OR if currentscore is lower replace
+                    formative_min[id] = (stud_score, t)
+
+        """now we are looping through each students best sum score and lowest best form score to build the report"""
+        rows = [] # becomes the df
+        for _, r in df_sum_best.iterrows():# loop through each students best summative score
+            id = str(r[id_col])#this is the ID
+            sum_score = int(r["total"])# total sum score
+            formin_score, formin_table = formative_min.get(id, (int("nan"), "N/A"))# get lowest form score and store N/A if none exist
+
+            rows.append({"student_id": id, "summative_table": summative_table, "summative_score": sum_score,
+                         "lowest_formative_score": formin_score,"lowest_formative_table": formin_table,"is_underperforming": sum_score < threshold})
+            
+        ##makes the dicts a df, sorts from lowest sum to highest and makes index 0 to n-1
         report = pd.DataFrame(rows).sort_values("summative_score", ascending=True).reset_index(drop=True)
         return report, summative_table
+    
 
-    def plot_underperformers(self, report: pd.DataFrame, summative_table: str, threshold: float) -> None:
-        under = report[report["is_underperforming"]].copy()
+#################### BUILDING THE REPORT #######################
+    def plot_underperformers(self, report: pd.DataFrame, summative_table: str, threshold: int) -> None:
+
+        under = report[report["is_underperforming"]].copy()#filter only underperforming students
+        
         if under.empty:
             print("No underperforming students found for this threshold.")
             return
+
+        """ 
+        plot 2 bar charts:
+         - bar chart 1 - summative of underperforming students, x axis student id, y axis summative score
+         - bar chart 2 - summative vs lowest formative, bar for summative, scatter for formative
+        """
 
         plt.figure(figsize=(12, 6))
         plt.bar(under["student_id"], under["summative_score"])
@@ -208,5 +168,3 @@ class UnderperformingStudents:
         plt.legend()
         plt.tight_layout()
         plt.show()
-
-
