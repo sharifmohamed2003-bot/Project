@@ -84,10 +84,10 @@ class TestResultsAnalyzer:
 
         df = df.copy()
 
-        # 1) Pick a "score" column robustly
-        # Prefer an existing 'score' if you already created one
+        # Picks a score column
+        
         if "score" not in df.columns:
-            # Try common grade column patterns in your data
+            # Try common grade column patterns in data
             score_candidates = [c for c in df.columns if c.lower().startswith("grade") or c.lower() == "grades"]
             if not score_candidates:
                 raise ValueError("No score/grade column found to plot (expected columns like 'Grade...' or 'Grades').")
@@ -115,7 +115,7 @@ class TestResultsAnalyzer:
             print("No numeric scores available to plot.")
             return
 
-        # 4) Plot
+        # Plot
         plt.figure(figsize=(10, 4))
         plt.bar(plot_df["Assessment"].astype(str), plot_df["score"].astype(float))
         plt.xticks(rotation=45, ha="right")

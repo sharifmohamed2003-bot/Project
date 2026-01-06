@@ -44,14 +44,15 @@ class UnderperformingStudents:
         
 
         # The ID used in the CSV is researcher id, however to future proof this ive added other possibilities
-        id_keywords = ["studentid", "student","researcherid", "researcher","candidateid", "candidate","id"]
+        id_keywords = ["studentid", "student","researchid", "research","candidateid", "candidate","id"]
 
-        for key in id_keywords: ## insertion ish sort for checking the columns against the keywords
-            for original, normalized in zip(cols):
-                if key in normalized:
-                    return original
+        for col in df.columns:
+            cleaned = re.sub(r"[^a-z0-9]", "", str(col).lower())
+            for key in id_keywords: ## insertion sort method of checking if any of the keywords are in the cleaned column name
+                if key in cleaned:
+                    return col
 
-        raise ValueError("No ID found")
+        raise ValueError(f"No ID found. Columns were: {cols}")
 
 
     @staticmethod
@@ -75,16 +76,19 @@ class UnderperformingStudents:
         return candidates[0]##picks the most recent formatted table
 
     def get_total_score(self, df: pd.DataFrame) -> pd.Series:
+    # Prefer explicit score column
+        if "score" in df.columns:
+            s = pd.to_numeric(df["score"], errors="coerce").fillna(0)
+            return s
 
-        if "score" in df.columns: #uses the score column if it exists
-            return df["score"]
-
-        qcols = [c for c in df.columns if re.fullmatch(r"Q\d+", str(c))]# sometimes it can be a bit buggy so this is a backup to check for Q columns
+        # Otherwise sum Q columns
+        qcols = [c for c in df.columns if re.fullmatch(r"Q\d+", str(c))]
         if qcols:
-           return df[qcols].sum(axis=1)#sums the tuple up
+            qdf = df[qcols].apply(pd.to_numeric, errors="coerce").fillna(0)
+            return qdf.sum(axis=1)
 
     ######################### main API #################################### 
-    def build_report(self,summative_table: str | None = None,threshold: int = 40.0) -> tuple[pd.DataFrame, str]:
+    def build_report(self,summative_table: str | None = None,threshold: float = 40.0) -> tuple[pd.DataFrame, str]:
         
         tables = self.list_tables()#gets all the tables 
         tests = self.formatted_test_tables(tables)#gets the formatted ones only
@@ -98,10 +102,13 @@ class UnderperformingStudents:
 
         df_sum["total"] = self.get_total_score(df_sum)
 
-        df_sum_best = (df_sum.sort_values("total", ascending=False), df_sum.drop_duplicates(subset=[id_col]), df_sum.copy())
+        df_sum_best = (
+            df_sum.sort_values("total", ascending=False)
+                .drop_duplicates(subset=[id_col], keep="first")
+        )
         #compute each student's lowest formative score
         formative_tables = [t for t in tests if t != summative_table] ##removes the summative table from the formative tables list
-        formative_min: dict[str, tuple[int, str]] = {}## this stores the score as a str and the score as a int and the table name as a str
+        formative_min: dict[str, tuple[float, str]] = {}## this stores the score as a str and the score as a float and the table name as a str
 
         for t in formative_tables:
             df_for = self.load_table(t)#load table in df
@@ -109,12 +116,15 @@ class UnderperformingStudents:
 
             df_for["total"] = self.get_total_score(df_for)#get total score for each student using the function
 
-
-            df_for_best = (df_for.sort_values("total", ascending=False),df_for.drop_duplicates(subset=[id_for]))#keep highest score per student
+            #keep highest score per student
+            df_for_best = (
+                df_for.sort_values("total", ascending=False)
+                    .drop_duplicates(subset=[id_for], keep="first")
+            )
 
             for _, row in df_for_best.iterrows():
                 id = str(row[id_for])# convert id to string
-                stud_score = int(row["total"])# get student score as int
+                stud_score = float(pd.to_numeric(row["total"], errors="coerce") or 0)# get student score as int
 
                 if id not in formative_min or stud_score < formative_min[id][0]:#if id isnt in the dict store it OR if currentscore is lower replace
                     formative_min[id] = (stud_score, t)
@@ -123,8 +133,8 @@ class UnderperformingStudents:
         rows = [] # becomes the df
         for _, r in df_sum_best.iterrows():# loop through each students best summative score
             id = str(r[id_col])#this is the ID
-            sum_score = int(r["total"])# total sum score
-            formin_score, formin_table = formative_min.get(id, (int("nan"), "N/A"))# get lowest form score and store N/A if none exist
+            sum_score = float(r["total"])# total sum score
+            formin_score, formin_table = formative_min.get(id, (None, "N/A"))# get lowest form score and store N/A if none exist
 
             rows.append({"student_id": id, "summative_table": summative_table, "summative_score": sum_score,
                          "lowest_formative_score": formin_score,"lowest_formative_table": formin_table,"is_underperforming": sum_score < threshold})

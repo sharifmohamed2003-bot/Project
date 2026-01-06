@@ -18,7 +18,7 @@ class StudentPerformance:
     def __init__(self, db_path: str):
         self.db_path = db_path
 
-    # DB helpers
+    ######################### DB helpers #################################
     def list_tables(self) -> list[str]:
         with sqlite3.connect(self.db_path) as conn:
             tables = pd.read_sql(
@@ -31,7 +31,7 @@ class StudentPerformance:
         with sqlite3.connect(self.db_path) as conn:
             return pd.read_sql(f"SELECT * FROM '{table}'", conn)
 
-    # detection helpers
+    # ######################### detection helpers #######################
     def detect_student_id_col(self, df):
 
         """
@@ -65,7 +65,6 @@ class StudentPerformance:
 
 
     @staticmethod
-    
     def question_columns(df: pd.DataFrame) -> list[str]:
         """  Identify question columns (Q1, Q2, etc.) in a DataFrame"""
         qcols = [c for c in df.columns if re.fullmatch(r"Q\d+", str(c))]
@@ -73,7 +72,9 @@ class StudentPerformance:
         if not qcols:
             raise ValueError("No question columns found (expected columns like Q1, Q2, ...).")
         return qcols
-
+    
+    """the reason for normalizing again after the Preprocessing is due to you being able to select every table in the database
+    some tables havent gont through the normalization so this ensures that all tables are normalized before analysis"""
     @staticmethod
     def ensure_numeric_0_100(series: pd.Series) -> pd.Series:
         s = pd.to_numeric(series, errors="coerce").fillna(0)
@@ -96,7 +97,8 @@ class StudentPerformance:
             return preferred[0]
         return tables[0] if tables else None
 
-    # main API 
+    ################## main API ##########################
+    """will look for the selected tables and student, if none is found or none is selected it will return an error"""
     def analyse(self, student_id: str, table: str | None = None) -> pd.DataFrame:
         tables = self.list_tables()
         if not tables:
