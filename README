@@ -1,0 +1,21 @@
+THINGS TO REMEBER: INPUT THE FILE PATH FOR EACH CODE BASE INTO THE MENU (SECOND CELL)
+
+
+Hi, this read me will be split into three sections the codebase, the menu specifically and the quirks of the menu
+
+First the code base, all of the code handle the graph making and plotting, so the specific graphs used in Studentpreformance and Underperforming are all built in there and are handled in there
+a quirk about studentpreformance was that i needed to add additional normalization into it so that when you pick a df even the non normalized ones it would still come out and give results that were functional, as the scales used in the graphs are all 0-100.
+underpreforming student was the hardest to code due to the open endedness of the requirements set. since we were given free raine on how to handle thethe graph output and its contents, it was the most enjoyable and challenging to complete.
+testresults is when i began looking deeper into better coding methods, the @staticmethod function was immensly helpful in doing calculations without needing to call self in every line, drastically reducing the time taken and headache of looking at lines of code to figure a bug out.
+
+The menu file is split into 2 main sections, having the filepaths to all of the code mentioned above and the actual GUI creation. the rest of the menu is for degbugging purposes that allowed to know which df's were being loaded and to make sure that the formatting and cleaning were working as intended, some points during testresults making, the formatting became incorrect due to a miscommunication between the testresults asking for tables and identifying them.
+PLEASE ENSURE THAT YOU ENTER THE FILE PATHS FOR EACH CODE BASE IN THE SECOND CELL. 
+if this is not done correctly the code will fail to know where the codebase is and will not function properly
+
+finally the GUI, it consists of 5 tabs, The CSV to SQL tab, Get Student Score tab, Underpreforming and studentpreformance tabs, and a final tab for the output that will show any errors and the output to the previous tabs.
+In the first tab you will just need to copy and paste the file path for the folder containing the CSVs you want to convert or you can individually choose a CSV to format, the single CSVs will take presidence is you choose both. second the Get Student Score shows all the score across all DF's. if you want to see a student score in an individual df youll need to use the student preformance tab, choose a table and the student it will output his score and a bar chart displaying his score in that df. the underpreforming student will require you to input the df you want to use, preferably the sumtest as the barchart and the rest of the calculated scores are based of the sumtests results.
+
+
+Thank you for this amazing coursework it ws a challenge and lots of sleepless nights went into it, if you are curious you can see the full Github history here:
+
+https://github.com/sharifmohamed2003-bot/Project.git
