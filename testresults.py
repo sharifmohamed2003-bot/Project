@@ -84,9 +84,10 @@ class TestResultsAnalyzer:
 
         df = df.copy()
 
-        # 1) Pick a score column 
+        # Picks a score column
+        
         if "score" not in df.columns:
-            # Try common grade column patterns in your data
+            # Try common grade column patterns in data
             score_candidates = [c for c in df.columns if c.lower().startswith("grade") or c.lower() == "grades"]
             if not score_candidates:
                 raise ValueError("No score/grade column found to plot (expected columns like 'Grade...' or 'Grades').")
